@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { polygonQuickDecomp } from './poly-decomp';
+import { polygonMakeCCW, polygonQuickDecomp } from './poly-decomp';
 import PolyPoint from './poly-point';
 import PolyShape from './poly-shape';
 
@@ -45,7 +45,9 @@ const PolyDecompDemo = (): React.ReactElement => {
         onPointerUp={() => {
           setPointerDown(false);
           if (points.length > 2) {
-            setPoints([...points, [...points[0]]]);
+            const newPoints = [...points, [...points[0]]] as [number, number][];
+            polygonMakeCCW(newPoints);
+            setPoints(newPoints);
           }
         }}
       >
